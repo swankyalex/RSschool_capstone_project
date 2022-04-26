@@ -4,9 +4,14 @@ include ./Makefile.in.mk
 .PHONY: format
 format:
 	$(call log, reorganizing imports & formatting code)
-	$(RUN) isort --virtual-env="$(DIR_VENV)" "$(DIR_SRC)" "$(DIR_SCRIPTS)"
+	$(RUN) isort "$(DIR_SRC)" "$(DIR_SCRIPTS)"
 	$(RUN) black "$(DIR_SRC)" "$(DIR_SCRIPTS)"
 
+
+.PHONY: profile
+profile:
+	$(call log, making pandas-profiling on data)
+	$(PYTHON) "$(DIR_SCRIPTS)/data_profiling.py"
 
 .PHONY: run
 run:
