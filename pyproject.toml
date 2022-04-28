@@ -1,9 +1,9 @@
 [tool.poetry]
-name = "RS School Capstone project"
+name = "forest_model"
 version = "1.0"
 description = "Final RS Project"
 authors = ["swankyalex <antilevski@tut.by>"]
-license = "Apache"
+license = "Apache License 2.0"
 
 [tool.poetry.dependencies]
 python = "^3.9"

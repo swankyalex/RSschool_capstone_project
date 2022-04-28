@@ -3,5 +3,5 @@ mlruns
 __pycache__
 .idea
 idea
-db.sqlite3
+
 
