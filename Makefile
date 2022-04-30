@@ -13,10 +13,18 @@ profile:
 	$(call log, making pandas-profiling on data)
 	$(PYTHON) "$(DIR_SCRIPTS)/data_profiling.py"
 
-.PHONY: run
-run:
-	$(call log, starting local web server)
-	$(PYTHON) src/manage.py runserver
+
+.PHONY: train-log
+train-log:
+	$(call log, training log regression)
+	$(PYTHON) "$(DIR_TRAIN)/train.py" --model log
+
+
+.PHONY: train-forest
+train-forest:
+	$(call log, training random forest)
+	$(PYTHON) "$(DIR_TRAIN)/train.py" --model forest
+
 
 .PHONY: run-prod
 run-prod:
