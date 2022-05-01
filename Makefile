@@ -26,6 +26,12 @@ train-forest:
 	$(PYTHON) "$(DIR_TRAIN)/train.py" --model forest
 
 
+.PHONY: mlflow
+mlflow:
+	$(call log, ml flow is launched)
+	$(RUN) mlflow ui
+
+
 .PHONY: run-prod
 run-prod:
 	$(call log, starting local web server)
