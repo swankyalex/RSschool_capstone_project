@@ -10,6 +10,16 @@ format:
 	$(call log, All good!)
 
 
+.PHONY: full-format
+full-format:
+	$(call log, reorganizing imports & formatting code)
+	$(RUN) isort "$(DIR_SRC)" "$(DIR_SCRIPTS)"
+	$(RUN) black "$(DIR_SRC)" "$(DIR_SCRIPTS)"
+	$(RUN) flake8 "$(DIR_SRC)" "$(DIR_SCRIPTS)"
+	$(RUN) mypy "$(DIR_SRC)"
+	$(call log, All good!)
+
+
 .PHONY: profile
 profile:
 	$(call log, making pandas-profiling on data)

@@ -45,7 +45,8 @@ def get_model(model_name: str, random_state: int) -> Model:
     return model
 
 
-def get_params(model_name: str, param_set: str) -> dict:
+def get_params(model_name: str, param_set: str) -> dict[str, list[Union[str, int]]]:
     """Returns selected parameters by user's choice"""
-    parameters = params[model_name][param_set]
-    return parameters
+    model_params = params[model_name]
+    parameters = model_params[param_set]  # type: ignore
+    return parameters  # type: ignore

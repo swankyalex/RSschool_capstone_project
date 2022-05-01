@@ -1,10 +1,12 @@
+from typing import Any
+
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
 from sklearn.metrics import log_loss
 from sklearn.metrics import make_scorer
 
 
-def get_metrics() -> dict:
+def get_metrics() -> dict[str, Any]:
     """Making dict with scoring parameters for k-fold cross validation"""
     accuracy = make_scorer(accuracy_score)
     f1 = make_scorer(f1_score, average="weighted")

@@ -1,6 +1,7 @@
 import argparse
 import os
 import pickle
+from typing import Any
 from typing import Tuple
 
 import click
@@ -19,7 +20,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import KFold
 
 
-def parse_args() -> list:
+def parse_args() -> list[Any]:
     """Parse args from CLI"""
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -65,7 +66,7 @@ model_path = os.path.join(DIR_MODEL, f"{model_name}.sav")
 
 
 def train_and_evaluate(
-    X: pd.DataFrame, y: pd.Series, model: Model, params: dict
+    X: pd.DataFrame, y: pd.Series, model: Model, params: dict[str, list[Any]]
 ) -> Tuple[Model, float]:
     """Train model with NestedCV validation and logging parameters to ML flow"""
     scoring = get_metrics()
@@ -94,7 +95,7 @@ def train_and_evaluate(
 
 
 def train_without_eval(
-    X: pd.DataFrame, y: pd.Series, model: Model, params: dict
+    X: pd.DataFrame, y: pd.Series, model: Model, params: dict[str, list[Any]]
 ) -> Tuple[Model, float]:
     """Train model without NestedCV validation"""
     gsc = GridSearchCV(model, params, cv=5, scoring="accuracy", refit=True, n_jobs=-1)
