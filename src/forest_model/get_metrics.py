@@ -1,5 +1,7 @@
-import numpy as np
-from sklearn.metrics import accuracy_score, f1_score, log_loss, make_scorer
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import f1_score
+from sklearn.metrics import log_loss
+from sklearn.metrics import make_scorer
 
 
 def get_metrics():

@@ -5,11 +5,15 @@ import pickle
 import click
 import mlflow
 import numpy as np
-from consts import DATA_PATH, DIR_MODEL
+from consts import DATA_PATH
+from consts import DIR_MODEL
 from get_data import get_train_data
 from get_metrics import get_metrics
-from get_model_and_params import get_model, get_params
-from sklearn.model_selection import GridSearchCV, KFold, cross_validate
+from get_model_and_params import get_model
+from get_model_and_params import get_params
+from sklearn.model_selection import cross_validate
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import KFold
 
 
 def parse_args():
