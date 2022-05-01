@@ -8,16 +8,17 @@ import click
 import mlflow
 import numpy as np
 import pandas as pd
-from consts import DATA_PATH
-from consts import DIR_MODEL
-from get_data import get_train_data
-from get_metrics import get_metrics
-from get_model_and_params import get_model
-from get_model_and_params import get_params
-from get_model_and_params import Model
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import KFold
+
+from forest_model.consts import DATA_PATH
+from forest_model.consts import DIR_MODEL
+from forest_model.get_data import get_train_data
+from forest_model.get_metrics import get_metrics
+from forest_model.get_model_and_params import get_model
+from forest_model.get_model_and_params import get_params
+from forest_model.get_model_and_params import Model
 
 
 def parse_args() -> list[Any]:

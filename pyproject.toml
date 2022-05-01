@@ -6,7 +6,7 @@ authors = ["swankyalex <antilevski@tut.by>"]
 license = "Apache License 2.0"
 
 [tool.poetry.scripts]
-train = "forest_model.train:train"
+train = "forest_model.train:train_model"
 
 [tool.poetry.dependencies]
 python = "^3.9"

@@ -1,7 +1,8 @@
 from typing import Tuple
 
 import pandas as pd
-from data_processing import process_data
+
+from forest_model.data_processing import process_data
 
 
 def get_train_data(path: str, process_type: str) -> Tuple[pd.DataFrame, pd.Series]:

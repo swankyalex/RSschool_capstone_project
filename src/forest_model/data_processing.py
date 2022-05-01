@@ -1,7 +1,8 @@
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
-from utils import undummify
+
+from forest_model.utils import undummify
 
 
 def process_data(df: pd.DataFrame, process_type: str) -> pd.DataFrame:
