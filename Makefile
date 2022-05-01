@@ -11,19 +11,19 @@ format:
 .PHONY: profile
 profile:
 	$(call log, making pandas-profiling on data)
-	$(PYTHON) "$(DIR_SCRIPTS)/data_profiling.py"
+	$(PYTHON) "$(DIR_SCRIPTS)\data_profiling.py"
 
 
 .PHONY: train-log
 train-log:
 	$(call log, training log regression)
-	$(PYTHON) "$(DIR_TRAIN)/train.py" --model log
+	$(PYTHON) "$(DIR_TRAIN)\train.py" --model log
 
 
 .PHONY: train-forest
 train-forest:
 	$(call log, training random forest)
-	$(PYTHON) "$(DIR_TRAIN)/train.py" --model forest
+	$(PYTHON) "$(DIR_TRAIN)\train.py" --model forest
 
 
 .PHONY: mlflow

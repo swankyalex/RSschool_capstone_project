@@ -3,7 +3,7 @@ import os
 import pandas as pd
 from pandas_profiling import ProfileReport
 
-from src.forest_model.consts import DATA_PATH
+from forest_model.consts import DATA_PATH
 
 path = os.path.join(DATA_PATH, "train.csv")
 data = pd.read_csv(path)
