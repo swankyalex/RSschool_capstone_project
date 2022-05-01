@@ -1,5 +1,9 @@
+from typing import Union
+
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
+
+Model = Union[RandomForestClassifier, LogisticRegression]
 
 models = {"log": LogisticRegression, "forest": RandomForestClassifier}
 
@@ -30,7 +34,8 @@ forest_params = {
 params = {"log": log_params, "forest": forest_params}
 
 
-def get_model(model_name, random_state):
+def get_model(model_name: str, random_state: int) -> Model:
+    """Returns selected model by user's choice"""
     assert model_name in models, f"{model_name} is incorrect name!"
     model = models[model_name]
     if model_name == "log":
@@ -40,6 +45,7 @@ def get_model(model_name, random_state):
     return model
 
 
-def get_params(model_name, param_set):
+def get_params(model_name: str, param_set: str) -> dict:
+    """Returns selected parameters by user's choice"""
     parameters = params[model_name][param_set]
     return parameters

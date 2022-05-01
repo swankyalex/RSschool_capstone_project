@@ -4,13 +4,15 @@ from sklearn.preprocessing import StandardScaler
 from utils import undummify
 
 
-def process_data(df, process_type):
+def process_data(df: pd.DataFrame, process_type: str) -> pd.DataFrame:
+    """Function for choosing type of preprocessing"""
     processing_types = {"1": processing_1, "2": processing_2}
     df = processing_types[process_type](df)
     return df
 
 
-def processing_1(df):
+def processing_1(df: pd.DataFrame) -> pd.DataFrame:
+    """1st process type"""
     cat_data = undummify(df.iloc[:, 10:])
     num_data = df.iloc[:, :10]
     df = pd.concat([num_data, cat_data], axis=1)
@@ -22,7 +24,8 @@ def processing_1(df):
     return df
 
 
-def processing_2(df):
+def processing_2(df: pd.DataFrame) -> pd.DataFrame:
+    """2nd process type"""
     cat_data = undummify(df.iloc[:, 10:])
     num_data = df.iloc[:, :10]
     df = pd.concat([num_data, cat_data], axis=1)

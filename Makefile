@@ -7,6 +7,8 @@ format:
 	$(RUN) isort "$(DIR_SRC)" "$(DIR_SCRIPTS)"
 	$(RUN) black "$(DIR_SRC)" "$(DIR_SCRIPTS)"
 	$(RUN) flake8 "$(DIR_SRC)" "$(DIR_SCRIPTS)"
+	$(call log, All good!)
+
 
 .PHONY: profile
 profile:

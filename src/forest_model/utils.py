@@ -1,7 +1,8 @@
 import pandas as pd
 
 
-def undummify(df, prefix_sep="_"):
+def undummify(df: pd.DataFrame, prefix_sep: str = "_") -> pd.DataFrame:
+    """Function to make back columns after get_dummies"""
     cols2collapse = {
         item.split(prefix_sep)[0]: (prefix_sep in item) for item in df.columns
     }
