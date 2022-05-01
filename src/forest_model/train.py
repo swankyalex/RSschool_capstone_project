@@ -6,7 +6,7 @@ import click
 import mlflow
 import numpy as np
 from consts import DATA_PATH, DIR_MODEL
-from get_data import get_data
+from get_data import get_train_data
 from get_metrics import get_metrics
 from get_model_and_params import get_model, get_params
 from sklearn.model_selection import GridSearchCV, KFold, cross_validate
@@ -34,13 +34,24 @@ def parse_args():
         "--params", help="Choose parameters set: [1,2,3]", type=str, default="1"
     )
     parser.add_argument(
-        "--evaluate", help="Evaluation needed (0, 1)", type=bool, default=False
+        "--evaluate", help="Evaluation needed (0, 1)", type=bool, default=True
+    )
+    parser.add_argument(
+        "--proc-type", help="Type of data preprocessing (1, 2)", type=str, default="1"
     )
     args = parser.parse_args()
     return vars(args).values()
 
 
-data_path, model_path, random_state, model_name, parameter_set, evaluate = parse_args()
+(
+    data_path,
+    model_path,
+    random_state,
+    model_name,
+    parameter_set,
+    evaluate,
+    processing_type,
+) = parse_args()
 os.makedirs(os.path.dirname(model_path), exist_ok=True)
 model_path = os.path.join(DIR_MODEL, f"{model_name}.sav")
 
@@ -80,7 +91,7 @@ def train_without_eval(X, y, model, params):
 
 
 def train_model():
-    X, y = get_data(data_path)
+    X, y = get_train_data(data_path, processing_type)
     model = get_model(model_name, random_state)
     params = get_params(model_name, parameter_set)
     if evaluate:
