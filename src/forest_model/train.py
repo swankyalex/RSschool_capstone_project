@@ -1,6 +1,7 @@
 import argparse
 import os
 import pickle
+import sys
 from typing import Any
 from typing import Tuple
 
@@ -21,7 +22,7 @@ from forest_model.get_model_and_params import get_params
 from forest_model.get_model_and_params import Model
 
 
-def parse_args() -> list[Any]:
+def parse_args(argv=None) -> list[Any]:
     """Parse args from CLI"""
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -49,25 +50,17 @@ def parse_args() -> list[Any]:
     parser.add_argument(
         "--proc-type", help="Type of data preprocessing (1, 2)", type=str, default="1"
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     return list(vars(args).values())
 
 
-(
-    data_path,
-    model_path,
+def train_and_evaluate(
+    X: pd.DataFrame,
+    y: pd.Series,
+    model: Model,
+    params: dict[str, list[Any]],
     random_state,
     model_name,
-    parameter_set,
-    evaluate,
-    processing_type,
-) = parse_args()
-os.makedirs(os.path.dirname(model_path), exist_ok=True)
-model_path = os.path.join(DIR_MODEL, f"{model_name}.sav")
-
-
-def train_and_evaluate(
-    X: pd.DataFrame, y: pd.Series, model: Model, params: dict[str, list[Any]]
 ) -> Tuple[Model, float]:
     """Train model with NestedCV validation and logging parameters to ML flow"""
     scoring = get_metrics()
@@ -106,13 +99,23 @@ def train_without_eval(
     return best_model, accuracy
 
 
-def train_model() -> None:
+def train_model(
+    data_path,
+    model_path,
+    random_state,
+    model_name,
+    parameter_set,
+    evaluate,
+    processing_type,
+) -> None:
     """Training the model"""
     X, y = get_train_data(data_path, processing_type)
     model = get_model(model_name, random_state)
     params = get_params(model_name, parameter_set)
     if evaluate:
-        best_model, accuracy = train_and_evaluate(X, y, model, params)
+        best_model, accuracy = train_and_evaluate(
+            X, y, model, params, random_state, model_name
+        )
     else:
         best_model, accuracy = train_without_eval(X, y, model, params)
     pickle.dump(best_model, open(model_path, "wb"))
@@ -120,5 +123,28 @@ def train_model() -> None:
     click.echo(f"Result accuracy - {accuracy}")
 
 
+def main():
+    (
+        data_path,
+        model_path,
+        random_state,
+        model_name,
+        parameter_set,
+        evaluate,
+        processing_type,
+    ) = parse_args(sys.argv[1:])
+    os.makedirs(os.path.dirname(model_path), exist_ok=True)
+    model_path = os.path.join(DIR_MODEL, f"{model_name}.sav")
+    train_model(
+        data_path,
+        model_path,
+        random_state,
+        model_name,
+        parameter_set,
+        evaluate,
+        processing_type,
+    )
+
+
 if __name__ == "__main__":
-    train_model()
+    main()
