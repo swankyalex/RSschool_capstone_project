@@ -4,9 +4,9 @@ include ./Makefile.in.mk
 .PHONY: format
 format:
 	$(call log, reorganizing imports & formatting code)
-	$(RUN) isort "$(DIR_SRC)" "$(DIR_SCRIPTS)" noxfile.py
-	$(RUN) black "$(DIR_SRC)" "$(DIR_SCRIPTS)" noxfile.py
-	$(RUN) flake8 "$(DIR_SRC)" "$(DIR_SCRIPTS)" noxfile.py
+	$(RUN) isort "$(DIR_SRC)" "$(DIR_SCRIPTS)" "$(DIR_TESTS)" noxfile.py
+	$(RUN) black "$(DIR_SRC)" "$(DIR_SCRIPTS)" "$(DIR_TESTS)" noxfile.py
+	$(RUN) flake8 "$(DIR_SRC)" "$(DIR_SCRIPTS)" "$(DIR_TESTS)" noxfile.py
 	$(call log, All good!)
 
 
@@ -19,7 +19,7 @@ mypy:
 
 .PHONY: full-format
 full-format: format mypy
-	$(call log, full formatting)
+	$(call log, code formatted)
 
 
 .PHONY: nox
