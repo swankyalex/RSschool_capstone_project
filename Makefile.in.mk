@@ -38,7 +38,7 @@ else
 
 IN_VENV := False
 RUN := poetry run
-POETRY_INSTALL := poetry istall
+POETRY_INSTALL := poetry install
 
 endif
 
