@@ -129,7 +129,6 @@ def train_and_evaluate(
             mlflow.log_param(param_name, value)
     return best_model, accuracy
 
-
 def train_without_eval(
     X: pd.DataFrame,
     y: pd.Series,
