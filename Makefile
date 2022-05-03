@@ -61,13 +61,13 @@ mlflow:
 .PHONY: venv
 venv:
 	$(call log, installing packages)
-	$(PIPENV_INSTALL)
+	$(POETRY_INSTALL)  --no-dev
 
 
 .PHONY: venv-dev
 venv-dev:
 	$(call log, installing development packages)
-	$(PIPENV_INSTALL) --dev
+	$(POETRY_INSTALL)
 
 
 

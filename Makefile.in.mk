@@ -32,13 +32,13 @@ ifeq ($(shell python "$(DIR_SCRIPTS)/detect_venv.py"), True)
 
 IN_VENV := True
 RUN :=
-PIPENV_INSTALL := echo Cannot create venv under venv
+POETRY_INSTALL := echo Cannot create venv under venv
 
 else
 
 IN_VENV := False
 RUN := poetry run
-PIPENV_INSTALL := poetry add
+POETRY_INSTALL := poetry istall
 
 endif
 
