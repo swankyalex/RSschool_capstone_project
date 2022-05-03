@@ -21,7 +21,7 @@ def processing_1(df: pd.DataFrame) -> pd.DataFrame:
     df["Wilderness"] = df["Wilderness"].map(wilderness)
     encoder = LabelEncoder()
     df.iloc[:, -1] = encoder.fit_transform(df.iloc[:, -1])
-    df = StandardScaler().fit_transform(df)
+    df[df.columns] = StandardScaler().fit_transform(df)
     return df
 
 
@@ -33,5 +33,5 @@ def processing_2(df: pd.DataFrame) -> pd.DataFrame:
     wilderness = {"Area1": 1, "Area2": 2, "Area3": 3, "Area4": 4}
     df["Wilderness"] = df["Wilderness"].map(wilderness)
     df.drop(columns=["Soil"], axis=1, inplace=True)
-    df = StandardScaler().fit_transform(df)
+    df[df.columns] = StandardScaler().fit_transform(df)
     return df
