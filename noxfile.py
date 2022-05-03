@@ -3,7 +3,7 @@
 import nox
 from nox.sessions import Session
 
-nox.options.sessions = "black", "mypy", "isort", "flake8"
+nox.options.sessions = "black", "mypy", "isort", "flake8", "tests"
 locations = ("src",)
 
 
@@ -33,3 +33,10 @@ def mypy(session: Session) -> None:
     """Type-check using mypy."""
     args = session.posargs or locations
     session.run("mypy", external=True, *args)
+
+
+@nox.session(python="3.9")
+def tests(session: Session) -> None:
+    """Run the test suite."""
+    args = session.posargs
+    session.run("pytest", external=True, *args)

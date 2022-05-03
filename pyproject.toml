@@ -6,7 +6,7 @@ authors = ["swankyalex <antilevski@tut.by>"]
 license = "Apache License 2.0"
 
 [tool.poetry.scripts]
-train = "forest_model.train:main"
+train = "forest_model.train:train_model"
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -24,6 +24,9 @@ flake8 = "^4.0.1"
 mypy = "^0.950"
 nox = "^2022.1.7"
 pytest = "^7.1.2"
+
+[tool.pytest.ini_options]
+filterwarnings = ["ignore::DeprecationWarning"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

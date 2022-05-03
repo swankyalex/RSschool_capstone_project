@@ -1,9 +1,8 @@
-import argparse
 import os
 import pickle
-import sys
-from typing import Any
+from pathlib import Path
 from typing import Tuple
+from typing import Union
 
 import click
 import mlflow
@@ -22,45 +21,88 @@ from forest_model.get_model_and_params import get_params
 from forest_model.get_model_and_params import Model
 
 
-def parse_args(argv=None) -> list[Any]:
-    """Parse args from CLI"""
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--d",
-        help="path to the train data",
-        type=str,
-        default=os.path.join(DATA_PATH, "train.csv"),
-    )
-    parser.add_argument(
-        "--s", help="path to save the model", type=str, default=DIR_MODEL
-    )
-    parser.add_argument("--random-state", help="set random state", type=int, default=42)
-    parser.add_argument(
-        "--model",
-        help="Choose model: <log> for log regression, <forest> for random forest",
-        type=str,
-        default="log",
-    )
-    parser.add_argument(
-        "--params", help="Choose parameters set: [1,2,3]", type=str, default="1"
-    )
-    parser.add_argument(
-        "--evaluate", help="Evaluation needed (0, 1)", type=bool, default=True
-    )
-    parser.add_argument(
-        "--proc-type", help="Type of data preprocessing (1, 2)", type=str, default="1"
-    )
-    args = parser.parse_args(argv)
-    return list(vars(args).values())
+@click.command()
+@click.option(
+    "-d",
+    "--data-path",
+    default=os.path.join(DATA_PATH, "train.csv"),
+    type=click.Path(exists=True, dir_okay=False, path_type=Path),
+    show_default=True,
+)
+@click.option(
+    "-s",
+    "--model-path",
+    default=DIR_MODEL,
+    type=click.Path(exists=False, dir_okay=True, writable=True, path_type=Path),
+    show_default=True,
+)
+@click.option(
+    "--random-state",
+    default=42,
+    type=int,
+    show_default=True,
+)
+@click.option(
+    "--model-name",
+    default="log",
+    type=click.Choice(["log", "forest"], case_sensitive=False),
+    help="Choose model: <log> for log regression, <forest> for random forest",
+    show_default=True,
+)
+@click.option(
+    "--params",
+    default="1",
+    type=click.Choice(["1", "2", "3"]),
+    help="Choose parameters set: [1,2,3]",
+    show_default=True,
+)
+@click.option(
+    "--evaluate",
+    default=True,
+    type=bool,
+    help="Evaluation needed (True, False)",
+    show_default=True,
+)
+@click.option(
+    "--proc-type",
+    default="1",
+    type=click.Choice(["1", "2"]),
+    help="Choose processing type: [1,2]",
+    show_default=True,
+)
+def train_model(
+    data_path: Path,
+    model_path: Path,
+    random_state: int,
+    model_name: str,
+    params: str,
+    evaluate: bool,
+    proc_type: str,
+) -> None:
+    """Training the model"""
+    X, y = get_train_data(data_path, proc_type)
+    model = get_model(model_name, random_state)
+    param = get_params(model_name, params)
+    if evaluate:
+        best_model, accuracy = train_and_evaluate(
+            X, y, model, param, random_state, model_name
+        )
+    else:
+        best_model, accuracy = train_without_eval(X, y, model, param)
+    path = os.path.join(model_path, f"{model_name}.sav")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    pickle.dump(best_model, open(path, "wb"))
+    click.echo(f"Model is saved to {path}.")
+    click.echo(f"Result accuracy - {accuracy}")
 
 
 def train_and_evaluate(
     X: pd.DataFrame,
     y: pd.Series,
     model: Model,
-    params: dict[str, list[Any]],
-    random_state,
-    model_name,
+    params: dict[str, list[Union[str, int]]],
+    random_state: int,
+    model_name: str,
 ) -> Tuple[Model, float]:
     """Train model with NestedCV validation and logging parameters to ML flow"""
     scoring = get_metrics()
@@ -89,7 +131,10 @@ def train_and_evaluate(
 
 
 def train_without_eval(
-    X: pd.DataFrame, y: pd.Series, model: Model, params: dict[str, list[Any]]
+    X: pd.DataFrame,
+    y: pd.Series,
+    model: Model,
+    params: dict[str, list[Union[str, int]]],
 ) -> Tuple[Model, float]:
     """Train model without NestedCV validation"""
     gsc = GridSearchCV(model, params, cv=5, scoring="accuracy", refit=True, n_jobs=-1)
@@ -99,52 +144,5 @@ def train_without_eval(
     return best_model, accuracy
 
 
-def train_model(
-    data_path,
-    model_path,
-    random_state,
-    model_name,
-    parameter_set,
-    evaluate,
-    processing_type,
-) -> None:
-    """Training the model"""
-    X, y = get_train_data(data_path, processing_type)
-    model = get_model(model_name, random_state)
-    params = get_params(model_name, parameter_set)
-    if evaluate:
-        best_model, accuracy = train_and_evaluate(
-            X, y, model, params, random_state, model_name
-        )
-    else:
-        best_model, accuracy = train_without_eval(X, y, model, params)
-    pickle.dump(best_model, open(model_path, "wb"))
-    click.echo(f"Model is saved to {model_path}.")
-    click.echo(f"Result accuracy - {accuracy}")
-
-
-def main():
-    (
-        data_path,
-        model_path,
-        random_state,
-        model_name,
-        parameter_set,
-        evaluate,
-        processing_type,
-    ) = parse_args(sys.argv[1:])
-    os.makedirs(os.path.dirname(model_path), exist_ok=True)
-    model_path = os.path.join(DIR_MODEL, f"{model_name}.sav")
-    train_model(
-        data_path,
-        model_path,
-        random_state,
-        model_name,
-        parameter_set,
-        evaluate,
-        processing_type,
-    )
-
-
 if __name__ == "__main__":
-    main()
+    train_model()
