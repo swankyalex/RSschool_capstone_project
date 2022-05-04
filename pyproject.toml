@@ -3,7 +3,7 @@ name = "forest_model"
 version = "1.0"
 description = "Final RS Project"
 authors = ["swankyalex <antilevski@tut.by>"]
-license = "Apache License 2.0"
+license = "Apache-2.0"
 
 [tool.poetry.scripts]
 train = "forest_model.train:train_model"
