@@ -85,7 +85,7 @@ def train_model(
     param = get_params(model_name, params)
     if evaluate:
         best_model, accuracy = train_and_evaluate(
-            X, y, model, param, random_state, model_name
+            X, y, model, param, random_state, model_name, proc_type
         )
     else:
         best_model, accuracy = train_without_eval(X, y, model, param)
@@ -103,6 +103,7 @@ def train_and_evaluate(
     params: dict[str, list[Union[str, int]]],
     random_state: int,
     model_name: str,
+    proc_type: str,
 ) -> Tuple[Model, float]:
     """Train model with NestedCV validation and logging parameters to ML flow"""
     scoring = get_metrics()
@@ -118,6 +119,7 @@ def train_and_evaluate(
         f1 = np.mean(scores["test_f1"])
         log_loss = np.mean(scores["test_log_loss"])
         mlflow.log_param("Model", model_name)
+        mlflow.log_param("Processing type", proc_type)
         mlflow.log_metric("accuracy", float(accuracy))
         mlflow.log_metric("roc_auc", float(roc_auc))
         mlflow.log_metric("f1", float(f1))
