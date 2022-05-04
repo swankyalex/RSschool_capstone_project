@@ -5,13 +5,6 @@ from sklearn.preprocessing import StandardScaler
 from forest_model.utils import undummify
 
 
-def process_data(df: pd.DataFrame, process_type: str) -> pd.DataFrame:
-    """Function for choosing type of preprocessing"""
-    processing_types = {"1": processing_1, "2": processing_2}
-    df = processing_types[process_type](df)
-    return df
-
-
 def processing_1(df: pd.DataFrame) -> pd.DataFrame:
     """1st process type"""
     cat_data = undummify(df.iloc[:, 10:])
@@ -34,4 +27,13 @@ def processing_2(df: pd.DataFrame) -> pd.DataFrame:
     df["Wilderness"] = df["Wilderness"].map(wilderness)
     df.drop(columns=["Soil"], axis=1, inplace=True)
     df[df.columns] = StandardScaler().fit_transform(df)
+    return df
+
+
+processing_types = {"1": processing_1, "2": processing_2}
+
+
+def process_data(df: pd.DataFrame, process_type: str) -> pd.DataFrame:
+    """Function for choosing type of preprocessing"""
+    df = processing_types[process_type](df)
     return df
