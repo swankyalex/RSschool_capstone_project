@@ -1,6 +1,10 @@
 from pathlib import Path
 from typing import Any
 from typing import Dict
+from typing import Union
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 
 _this_file = Path(__file__).resolve()
 
@@ -33,4 +37,9 @@ MODEL_PARAMS: Dict[str, Dict[str, Any]] = {
             "min_samples_split": [10, 15, 20],
         },
     },
+}
+Model = Union[RandomForestClassifier, LogisticRegression]
+MODELS: Dict[str, Model] = {
+    "log": LogisticRegression(max_iter=300, solver="liblinear"),
+    "forest": RandomForestClassifier(n_estimators=100),
 }

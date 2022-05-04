@@ -14,11 +14,12 @@ from sklearn.model_selection import KFold
 
 from forest_model.consts import DATA_PATH
 from forest_model.consts import DIR_MODEL
+from forest_model.consts import Model
+from forest_model.consts import MODEL_PARAMS
 from forest_model.get_data import get_train_data
 from forest_model.get_metrics import get_metrics
 from forest_model.get_model_and_params import get_model
 from forest_model.get_model_and_params import get_params
-from forest_model.get_model_and_params import Model
 
 
 @click.command()
@@ -45,15 +46,15 @@ from forest_model.get_model_and_params import Model
 @click.option(
     "--model-name",
     default="log",
-    type=click.Choice(["log", "forest"], case_sensitive=False),
-    help="Choose model: <log> for log regression, <forest> for random forest",
+    type=click.Choice(list(MODEL_PARAMS.keys()), case_sensitive=False),
+    help=f"Choose model: {list(MODEL_PARAMS.keys())}",
     show_default=True,
 )
 @click.option(
     "--params",
     default="1",
-    type=click.Choice(["1", "2", "3"]),
-    help="Choose parameters set: [1,2,3]",
+    type=click.Choice(list(MODEL_PARAMS["log"].keys())),
+    help=f"Choose parameters set: {list(MODEL_PARAMS['log'].keys())}",
     show_default=True,
 )
 @click.option(
