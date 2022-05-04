@@ -1,4 +1,11 @@
+import os
+import pickle
+from pathlib import Path
+
+import click
 import pandas as pd
+
+from forest_model.model_settings import Model
 
 
 def undummify(df: pd.DataFrame, prefix_sep: str = "_") -> pd.DataFrame:
@@ -20,3 +27,10 @@ def undummify(df: pd.DataFrame, prefix_sep: str = "_") -> pd.DataFrame:
             series_list.append(df[col])
     undummified_df = pd.concat(series_list, axis=1)
     return undummified_df
+
+
+def save_model(model_path: Path, model_name: str, best_model: Model) -> None:
+    path = os.path.join(model_path, f"{model_name}.sav")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    pickle.dump(best_model, open(path, "wb"))
+    click.echo(f"Model is saved to {path}.")

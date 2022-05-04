@@ -17,8 +17,8 @@ mypy:
 	$(call log, All good!)
 
 
-.PHONY: full-format
-full-format: format mypy
+.PHONY: format-full
+format-full: format mypy
 	$(call log, code formatted)
 
 

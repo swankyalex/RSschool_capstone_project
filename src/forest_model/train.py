@@ -1,5 +1,4 @@
 import os
-import pickle
 from pathlib import Path
 from typing import Tuple
 from typing import Union
@@ -14,11 +13,14 @@ from sklearn.model_selection import KFold
 
 from forest_model.consts import DATA_PATH
 from forest_model.consts import DIR_MODEL
+from forest_model.data_processing import processing_types
 from forest_model.get_data import get_train_data
 from forest_model.get_metrics import get_metrics
 from forest_model.get_model_and_params import get_model
 from forest_model.get_model_and_params import get_params
-from forest_model.get_model_and_params import Model
+from forest_model.model_settings import Model
+from forest_model.model_settings import model_params
+from forest_model.utils import save_model
 
 
 @click.command()
@@ -45,15 +47,15 @@ from forest_model.get_model_and_params import Model
 @click.option(
     "--model-name",
     default="log",
-    type=click.Choice(["log", "forest"], case_sensitive=False),
-    help="Choose model: <log> for log regression, <forest> for random forest",
+    type=click.Choice(list(model_params.keys()), case_sensitive=False),
+    help=f"Choose model: {list(model_params.keys())}",
     show_default=True,
 )
 @click.option(
     "--params",
     default="1",
-    type=click.Choice(["1", "2", "3"]),
-    help="Choose parameters set: [1,2,3]",
+    type=click.Choice(list(model_params["log"].keys())),
+    help=f"Choose parameters set: {list(model_params['log'].keys())}",
     show_default=True,
 )
 @click.option(
@@ -66,8 +68,8 @@ from forest_model.get_model_and_params import Model
 @click.option(
     "--proc-type",
     default="1",
-    type=click.Choice(["1", "2"]),
-    help="Choose processing type: [1,2]",
+    type=click.Choice(list(processing_types.keys())),
+    help=f"Choose processing type: {list(processing_types.keys())}",
     show_default=True,
 )
 def train_model(
@@ -85,14 +87,11 @@ def train_model(
     param = get_params(model_name, params)
     if evaluate:
         best_model, accuracy = train_and_evaluate(
-            X, y, model, param, random_state, model_name
+            X, y, model, param, random_state, model_name, proc_type
         )
     else:
         best_model, accuracy = train_without_eval(X, y, model, param)
-    path = os.path.join(model_path, f"{model_name}.sav")
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    pickle.dump(best_model, open(path, "wb"))
-    click.echo(f"Model is saved to {path}.")
+    save_model(model_path, model_name, best_model)
     click.echo(f"Result accuracy - {accuracy}")
 
 
@@ -103,6 +102,7 @@ def train_and_evaluate(
     params: dict[str, list[Union[str, int]]],
     random_state: int,
     model_name: str,
+    proc_type: str,
 ) -> Tuple[Model, float]:
     """Train model with NestedCV validation and logging parameters to ML flow"""
     scoring = get_metrics()
@@ -118,6 +118,7 @@ def train_and_evaluate(
         f1 = np.mean(scores["test_f1"])
         log_loss = np.mean(scores["test_log_loss"])
         mlflow.log_param("Model", model_name)
+        mlflow.log_param("Processing type", proc_type)
         mlflow.log_metric("accuracy", float(accuracy))
         mlflow.log_metric("roc_auc", float(roc_auc))
         mlflow.log_metric("f1", float(f1))
