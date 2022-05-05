@@ -16,14 +16,14 @@ def black(session: Session) -> None:
 
 @nox.session(python="3.9")
 def isort(session: Session) -> None:
-    """Run black code formatter."""
+    """Run isort formatter."""
     args = session.posargs or locations
     session.run("isort", external=True, *args)
 
 
 @nox.session(python="3.9")
 def flake8(session: Session) -> None:
-    """Run black code formatter."""
+    """Run flake8 checks."""
     args = session.posargs or locations
     session.run("flake8", external=True, *args)
 
