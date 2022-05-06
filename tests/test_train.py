@@ -43,24 +43,24 @@ def test_error_for_invalid_model(runner: CliRunner) -> None:
     assert "Invalid value for '--model-name'" in result.output
 
 
-def test_train_function(runner: CliRunner) -> None:
+def test_train_function(runner: CliRunner, tmp_path) -> None:
     """Testing the model on some small sample of data, check it for correctness saving,
     checking test accuracy in correct range, and data has no duplicates or none values"""
-    with runner.isolated_filesystem():
+    with runner.isolated_filesystem(temp_dir=tmp_path):
         result = runner.invoke(
             train_model,
             [
                 "--data-path",
                 os.path.join(DIR_FIXTURES, "test.csv"),
                 "--model-path",
-                DIR_FIXTURES,
+                tmp_path,
             ],
         )
-        model = pickle.load(open(os.path.join(DIR_FIXTURES, "log.sav"), "rb"))
+
+        model = pickle.load(open(os.path.join(tmp_path, "log.sav"), "rb"))
         X, y = get_train_data(os.path.join(DIR_FIXTURES, "test.csv"), "1")
         scores = cross_val_score(model, X, y, cv=5, n_jobs=-1)
         accuracy = float(np.mean(scores))
-        os.remove(os.path.join(DIR_FIXTURES, "log.sav"))
 
         assert 0.5 < accuracy <= 1
         assert X.duplicated().sum() == 0
