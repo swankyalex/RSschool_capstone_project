@@ -6,6 +6,7 @@ This demo uses [Forest Cover](https://www.kaggle.com/competitions/forest-cover-t
 [![Lines of code](https://img.shields.io/tokei/lines/github/swankyalex/RSschool_capstone_project)](https://github.com/swankyalex/RSschool_capstone_project/tree/master)
 [![main](https://github.com/swankyalex/RSschool_capstone_project/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/swankyalex/RSschool_capstone_project/actions)
 
+
 ## Usage
 This package allows you to train model for the forest cover type (the predominant kind of tree cover) from strictly cartographic variables 
 (as opposed to remotely sensed data).
