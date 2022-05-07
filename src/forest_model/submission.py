@@ -19,6 +19,7 @@ from forest_model.model_settings import model_params
     show_default=True,
 )
 def make_submission(model_name: str) -> None:
+    """Making submission.csv file on testing data"""
     model = pickle.load(open(os.path.join(DIR_MODEL, f"{model_name}.sav"), "rb"))
     test_data = os.path.join(DATA_PATH, "test.csv")
     X_test = pd.read_csv(test_data, index_col="Id")
