@@ -12,6 +12,7 @@ def processing_1(df: pd.DataFrame) -> pd.DataFrame:
     df = pd.concat([num_data, cat_data], axis=1)
     wilderness = {"Area1": 1, "Area2": 2, "Area3": 3, "Area4": 4}
     df["Wilderness"] = df["Wilderness"].map(wilderness)
+    df.loc[(df["Soil"] == "Type7") | (df["Soil"] == "Type15"), "Soil"] = "Type29"
     encoder = LabelEncoder()
     df.iloc[:, -1] = encoder.fit_transform(df.iloc[:, -1])
     df[df.columns] = StandardScaler().fit_transform(df)

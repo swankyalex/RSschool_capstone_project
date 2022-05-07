@@ -29,9 +29,9 @@ model_params: Dict[str, Dict[str, Any]] = {
             "min_samples_split": [2, 3, 4],
         },
         "3": {
-            "max_depth": list(range(25, 36, 5)),
-            "min_samples_leaf": list(range(2, 10, 2)),
-            "min_samples_split": list(range(2, 10, 2)),
+            "max_depth": [30, 35, 40],
+            "min_samples_leaf": [1, 2, 3],
+            "min_samples_split": [2, 3, 4],
         },
     },
 }

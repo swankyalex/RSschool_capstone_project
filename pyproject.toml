@@ -7,6 +7,7 @@ license = "Apache-2.0"
 
 [tool.poetry.scripts]
 train = "forest_model.train:train_model"
+submit = "forest_model.submission:make_submission"
 
 [tool.poetry.dependencies]
 python = "^3.9"
