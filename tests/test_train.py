@@ -45,7 +45,7 @@ def test_error_for_invalid_model(runner: CliRunner) -> None:
 
 def test_train_function(runner: CliRunner, tmp_path) -> None:
     """Testing the model on some small sample of data, check it for correctness saving,
-    checking test accuracy in correct range, and data has no duplicates or none values"""
+    checking test accuracy in correct range,and data has no duplicates or none values"""
     with runner.isolated_filesystem(temp_dir=tmp_path):
         result = runner.invoke(
             train_model,

@@ -24,6 +24,7 @@ endif
 DIR_SCRIPTS = $(DIR_REPO)\scripts
 DIR_SRC := $(DIR_REPO)\src
 DIR_TESTS := $(DIR_REPO)\tests
+DIR_DATA := $(DIR_REPO)\data
 DIR_TRAIN := $(DIR_REPO)\src\forest_model
 # -----------------------------------------------
 # Virtualenv-depend variables

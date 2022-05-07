@@ -52,6 +52,24 @@ train-forest:
 	$(PYTHON) "$(DIR_TRAIN)\train.py" --model-name forest
 
 
+.PHONY: submission
+submission:
+	$(call log, making forest submission)
+	$(PYTHON) "$(DIR_TRAIN)\submission.py" --model-name forest
+
+
+.PHONY: submission-log
+submission-log:
+	$(call log, making log legression submission)
+	$(PYTHON) "$(DIR_TRAIN)\submission.py" --model-name log
+
+
+.PHONY: submit
+submit:
+	$(call log, making submit to kaggle)
+	kaggle competitions submit -c forest-cover-type-prediction -f "$(DIR_DATA)\submission.csv" -m "Message"
+
+
 .PHONY: mlflow
 mlflow:
 	$(call log, ml flow is launched)
