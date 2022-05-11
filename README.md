@@ -71,7 +71,7 @@ poetry run mlflow ui
 ```sh
 make mlflow
 ```
-**You will look something like this**
+**You will see the ML flow statistics**
 ![MLFlow experiments example](https://i.ibb.co/gbYNy9q/mlflow.png)
 
 10. You can make submission file with one of the following commands:
