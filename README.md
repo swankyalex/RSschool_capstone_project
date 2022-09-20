@@ -4,7 +4,7 @@
 
 Сapstone project for RS School Machine Learning course 2022.
 
-This demo uses [Forest Cover](https://www.kaggle.com/competitions/forest-cover-type-prediction/data) dataset.
+This project uses [Forest Cover](https://www.kaggle.com/competitions/forest-cover-type-prediction/data) dataset.
 
 
 ## Usage
