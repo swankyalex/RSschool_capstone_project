@@ -2,6 +2,7 @@
 [![Lines of code](https://img.shields.io/tokei/lines/github/swankyalex/RSschool_capstone_project)](https://github.com/swankyalex/RSschool_capstone_project/tree/master)
 [![main](https://github.com/swankyalex/RSschool_capstone_project/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/swankyalex/RSschool_capstone_project/actions)
 
+
 Сapstone project for RS School Machine Learning course 2022.
 
 This project uses [Forest Cover](https://www.kaggle.com/competitions/forest-cover-type-prediction/data) dataset.
