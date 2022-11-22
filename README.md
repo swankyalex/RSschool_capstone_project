@@ -2,7 +2,15 @@
 [![Lines of code](https://img.shields.io/tokei/lines/github/swankyalex/RSschool_capstone_project)](https://github.com/swankyalex/RSschool_capstone_project/tree/master)
 [![main](https://github.com/swankyalex/RSschool_capstone_project/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/swankyalex/RSschool_capstone_project/actions)
 
-[![Make](https://img.shields.io/badge/Make-%23008FBA.svg?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/software/make/)
+[![Make](https://img.shields.io/badge/Make-%23008FBA.svg?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/software/make/)&nbsp;
+[![Python](https://img.shields.io/badge/-Python-blue?logo=python&logoColor=white&style=for-the-badge)](https://www.python.org/)&nbsp;
+[![Scikit-Learn](https://img.shields.io/badge/-Sklearn-black?logo=scikitlearn&style=for-the-badge&url=https://scikit-learn.org/stable/)](https://scikit-learn.org/)&nbsp;
+[![Numpy](https://img.shields.io/badge/-Numpy-blue?logo=numpy&style=for-the-badge&url=https://numpy.org/)](https://numpy.org/)&nbsp;
+[![Pandas](https://img.shields.io/badge/-Pandas-darkblue?logo=pandas&style=for-the-badge&url=https://pandas.pydata.org/)](https://pandas.pydata.org/)&nbsp;
+[![MLFlow](https://img.shields.io/badge/-MLflow-darkblue?logo=mlflow&style=for-the-badge&url=https://pandas.pydata.org/)](https://mlflow.org/)&nbsp;
+[![Click](https://img.shields.io/badge/-Click-blue?logo=click&style=for-the-badge&url=https://pandas.pydata.org/)](https://click.palletsprojects.com/en/8.1.x/)&nbsp;
+[![MyPy](https://img.shields.io/badge/-MyPy-orange?logo=mypy&logoColor=white&style=for-the-badge)](https://mypy.readthedocs.io/en/stable/)&nbsp;
+[![Nox](https://img.shields.io/badge/-Nox-blue?logo=nox&style=for-the-badge&url=https://pandas.pydata.org/)](https://nox.thea.codes/en/stable/)&nbsp;
 
 Сapstone project for RS School Machine Learning course 2022.
 
