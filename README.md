@@ -2,7 +2,7 @@
 [![Lines of code](https://img.shields.io/tokei/lines/github/swankyalex/RSschool_capstone_project)](https://github.com/swankyalex/RSschool_capstone_project/tree/master)
 [![main](https://github.com/swankyalex/RSschool_capstone_project/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/swankyalex/RSschool_capstone_project/actions)
 
-![Make](https://img.shields.io/badge/Make-%23008FBA.svg?style=for-the-badge&logo=gnu&logoColor=white)
+[![Make](https://img.shields.io/badge/Make-%23008FBA.svg?style=for-the-badge&logo=gnu&logoColor=white)](https://www.gnu.org/software/make/)
 
 Сapstone project for RS School Machine Learning course 2022.
 
